@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private void ListViewController() {
 
         //#1
-        int[] intIcon = {R.drawable.traffic_01, R.drawable.traffic_02,
+        final int[] intIcon = {R.drawable.traffic_01, R.drawable.traffic_02,
                 R.drawable.traffic_03, R.drawable.traffic_04,
                 R.drawable.traffic_05, R.drawable.traffic_06,
                 R.drawable.traffic_07, R.drawable.traffic_08,
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.traffic_19, R.drawable.traffic_20};
 
         //#2
-        String[] strTittle = new String[20];
-        strTittle[0] = "หัวข้อที่ 1";
+        final String[] strTittle = new String[20];
+        /*strTittle[0] = "หัวข้อที่ 1";
         strTittle[1] = "หัวข้อที่ 2";
         strTittle[2] = "หัวข้อที่ 3";
         strTittle[3] = "หัวข้อที่ 4";
@@ -71,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
         strTittle[16] = "หัวข้อที่ 17";
         strTittle[17] = "หัวข้อที่ 18";
         strTittle[18] = "หัวข้อที่ 19";
-        strTittle[19] = "หัวข้อที่ 20";
+        strTittle[19] = "หัวข้อที่ 20";*/
+        for (int i = 1; i <= 20; i++) {
+            strTittle[i-1] = "หัวข้อที่ " + i;
+        }
 
 
         //#3
@@ -79,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter objMyAdapter = new MyAdapter(MainActivity.this, strTittle, strDetail, intIcon);
         trafficListView.setAdapter(objMyAdapter);
 
+        trafficListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent objIntent = new Intent(MainActivity.this,DetailActivity.class);
+                objIntent.putExtra("Title", strTittle[position]);
+                objIntent.putExtra("Image", intIcon[position]);
+                objIntent.putExtra("Index", position);
+                startActivity(objIntent);
+
+            }   // Event
+        });
 
 
     }   //ListViewController
@@ -88,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                MediaPlayer buttonMediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.crickets);
+                MediaPlayer buttonMediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.lamp);
                 buttonMediaPlayer.start();
 
                 Intent objIntent = new Intent(Intent.ACTION_VIEW);
