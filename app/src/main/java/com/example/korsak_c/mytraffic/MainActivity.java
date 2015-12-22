@@ -10,15 +10,21 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 public class MainActivity extends AppCompatActivity {
 
     //Explicit  ประกาศตัวแปร
     private ListView trafficListView;
     private Button aboutMeButton;
-
-
-
-
+    private Button xxxx;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -35,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         //ListView Controller
         ListViewController();
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }   // Main Method
 
     private void ListViewController() {
@@ -74,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         strTittle[18] = "หัวข้อที่ 19";
         strTittle[19] = "หัวข้อที่ 20";*/
         for (int i = 1; i <= 20; i++) {
-            strTittle[i-1] = "หัวข้อที่ " + i;
+            strTittle[i - 1] = "หัวข้อที่ " + i;
         }
 
 
@@ -87,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent objIntent = new Intent(MainActivity.this,DetailActivity.class);
+                Intent objIntent = new Intent(MainActivity.this, DetailActivity.class);
                 objIntent.putExtra("Title", strTittle[position]);
                 objIntent.putExtra("Image", intIcon[position]);
                 objIntent.putExtra("Index", position);
@@ -114,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }   //event
         });
 
+
     }
 
     private void bindWidget() {
@@ -121,8 +131,46 @@ public class MainActivity extends AppCompatActivity {
         trafficListView = (ListView) findViewById(R.id.listView);
         aboutMeButton = (Button) findViewById(R.id.button);
 
-
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.korsak_c.mytraffic/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.korsak_c.mytraffic/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
 }   // Main Class
 

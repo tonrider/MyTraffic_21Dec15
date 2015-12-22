@@ -33,7 +33,10 @@ public class DetailActivity extends AppCompatActivity {
 
         //Show View
         showView();
+
     }
+
+
 
     private void showView() {
 
@@ -57,6 +60,7 @@ public class DetailActivity extends AppCompatActivity {
         titleTextView = (TextView) findViewById(R.id.textView4);
         detailTextView = (TextView) findViewById(R.id.textView5);
         imageView = (ImageView) findViewById(R.id.imageView2);
+
     }
 
 
